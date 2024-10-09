@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprodb 
+  labels:
+    app: vprodb   #for our service definition file  , we will create service to route to any pod that has that label  
+spec:    # specification about the deployment
+  selector:     
+    matchLabels:
+      app: vprodb 
+  template: # pod definition 
+    metadata: 
+      labels:
+        app: vprodb 
+    spec:  # specification about the pod
+      containers:
+      - name: vprodb 
+        image: vprofile/vprofiledb
+        ports:
+         - name: vprodb-port  
+           containerPort: 3306
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts: 
+          - mountPath: /var/lib/mysql
+            name: vpro-db-data
+         
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+               name: app-secret
+               key: db-pass
+     
+      # nodeSelector: 
+      #    name: name-of-nameSpace/or-label  # to specify node
+
+      volumes:  
+       - name: vpro-db-data
+         dir:  {}  
+
+      
