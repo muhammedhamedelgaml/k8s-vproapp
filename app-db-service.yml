@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vprodb  #based on application.properties file// , the server should accept the request on 3306 and send it to our DB port    
+spec:
+  ports:
+  - port: 3306
+    targetPort: vprodb-port    # we could say 3306 also 
+    protocol: TCP 
+  
+  type: ClusterIP
+  selector:   # the service is going to accept the request from 3306 and then should send the request to the pod (vprodb"backend") on port 3306     
+    app: vprodb    
