@@ -39,6 +39,7 @@ spec:    # specification about the deployment
 
       volumes:  
        - name: vpro-db-data
-         dir:  {}  
+         persistentVolumeClaim:
+           claimName: mypvc
 
       
