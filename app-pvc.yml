@@ -3,8 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: mypvc
 spec:
+  selector:
+    matchLabels:
+      app: vpro-pv
   resources:
     requests:
-      storage: "300Mi"
+      storage: "500Mi"
   accessModes:
     - ReadWriteOnce
